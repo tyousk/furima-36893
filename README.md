@@ -8,7 +8,9 @@
 | email              | string | null: false, unique: true |
 | encrypted_password | string | null: false               |
 | first_name         | string | null: false               |
+| first_name_kana    | string | null: false               |
 | last_name          | string | null: false               |
+| last_name_kana     | string | null: false               |
 | birth_day          | date   | null: false               |
 
 ### Association
@@ -25,29 +27,27 @@
 
 ### Association
 
-- belongs_to :users
-- has_one :items
-- has_one :addresses
+- belongs_to :user
+- belongs_to :item
+- has_one :address
 
 ## items テーブル
 
-| Column     | Type       | Options                        |
-| ------     | ---------- | ------------------------------ |
-| image      | string     | null: false                    |
-| name       | string     | null: false                    |
-| about      | text       | null: false                    |
-| category   | string     | null: false                    |
-| statues    | string     | null: false                    |
-| fee        | string     | null: false                    |
-| sender     | string     | null: false                    |
-| send_day   | string     | null: false                    |
-| price      | string     | null: false                    |
-| seller     | string     | null: false                    |
-| user       | references | null: false, foreign_key: true |
+| Column        | Type       | Options                        |
+| ------------- | ---------- | ------------------------------ |
+| name          | string     | null: false                    |
+| about         | text       | null: false                    |
+| category_id   | integer    | null: false                    |
+| statues_id    | integer    | null: false                    |
+| fee_id        | integer    | null: false                    |
+| prefecture_id | integer    | null: false                    |
+| send_day_id   | integer    | null: false                    |
+| price         | integer    | null: false                    |
+| user          | references | null: false, foreign_key: true |
 
 ### Association
 
-- has_one :buy_records
+- has_one :buy_record
 - belongs_to :user
 
 ## addresses テーブル
@@ -60,8 +60,8 @@
 | address       | string     | null: false                    |
 | building_name | string     |                                |
 | phone_number  | string     | null: false                    |
-| item          | references | null: false, foreign_key: true |
+| buy_record    | references | null: false, foreign_key: true |
 
 ### Association
 
-- belong_to :items
+- belong_to :buy_record
