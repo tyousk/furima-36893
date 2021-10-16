@@ -27,7 +27,7 @@ class ItemsController < ApplicationController
     if user_signed_in?
       redirect_to action: :index unless @item.user_id == current_user.id
     else
-      redirect_to action: :index
+      redirect_to action: :new
     end
   end
 
