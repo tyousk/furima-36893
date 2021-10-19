@@ -23,6 +23,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    redirect_to root_path unless @item.buy_record.nil?
   end
 
   def update
