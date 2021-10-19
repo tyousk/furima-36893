@@ -1,7 +1,7 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   has_one_attached :buy_record
-	has_one :buy_record
+  has_one :buy_record
   belongs_to :user
   has_one_attached :image
   validates :name, :about, :price, :image, presence: true
