@@ -1,6 +1,8 @@
 class BuyRecordsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :return_index
+  before_action :sold_return
   def index
-    @item = Item.find(params[:item_id])
     @buy_record_address = BuyRecordAddress.new
   end
 
@@ -31,5 +33,14 @@ class BuyRecordsController < ApplicationController
       card: buy_record_params[:token], # カードトークン
       currency: 'jpy'                 # 通貨の種類（日本円）
     )
+  end
+
+  def return_index
+    @item = Item.find(params[:item_id])
+    redirect_to root_path if @item.user_id == current_user.id
+  end
+
+  def sold_return
+    redirect_to root_path unless @item.buy_record.nil?
   end
 end
