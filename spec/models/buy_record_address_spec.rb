@@ -46,7 +46,12 @@ RSpec.describe BuyRecordAddress, type: :model do
         @buy_record_address.valid?
         expect(@buy_record_address.errors.full_messages).to include("Phone number can't be blank", 'Phone number is invalid')
       end
-      it '「電話番号」が10桁以上11桁以内でないと登録できない' do
+      it '「電話番号」が9桁以下では登録できない' do
+        @buy_record_address.phone_number = '123123123'
+        @buy_record_address.valid?
+        expect(@buy_record_address.errors.full_messages).to include('Phone number is invalid')
+      end
+      it '「電話番号」が12桁以上では登録できない' do
         @buy_record_address.phone_number = '123123123123'
         @buy_record_address.valid?
         expect(@buy_record_address.errors.full_messages).to include('Phone number is invalid')
@@ -55,6 +60,16 @@ RSpec.describe BuyRecordAddress, type: :model do
         @buy_record_address.phone_number = '123-123-123'
         @buy_record_address.valid?
         expect(@buy_record_address.errors.full_messages).to include('Phone number is invalid')
+      end
+      it 'userが紐付いていなければ購入できない' do
+        @buy_record_address.user_id = nil
+        @buy_record_address.valid?
+        expect(@buy_record_address.errors.full_messages).to include("User can't be blank")
+      end
+      it 'itemが紐付いていなければ購入できない' do
+        @buy_record_address.item_id = nil
+        @buy_record_address.valid?
+        expect(@buy_record_address.errors.full_messages).to include("Item can't be blank")
       end
       it 'tokenが空では登録できないこと' do
         @buy_record_address.token = nil
